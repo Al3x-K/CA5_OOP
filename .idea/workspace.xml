@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="116c46aa-4ba0-4bde-b337-a2186483eea3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +74,7 @@
       <workItem from="1710089810736" duration="5000" />
       <workItem from="1710089823241" duration="1000" />
       <workItem from="1710089901995" duration="381000" />
-      <workItem from="1710090290372" duration="4279000" />
+      <workItem from="1710090290372" duration="5341000" />
     </task>
     <servers />
   </component>
