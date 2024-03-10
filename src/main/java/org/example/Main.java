@@ -36,11 +36,11 @@ public class Main
 
             if(product != null)
             {
-                System.out.println("Product found: " + product);
+                System.out.println("Product with id " + productId + " was found: " + product);
             }
             else
             {
-                System.out.println("Product with that id not found");
+                System.out.println("Product with id " + productId + " is not valid.");
             }
 
             productId = 7;

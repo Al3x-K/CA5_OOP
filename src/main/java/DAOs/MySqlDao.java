@@ -39,7 +39,6 @@ public class MySqlDao
             if(connection != null)
             {
                 connection.close();
-                connection = null;
             }
         }
         catch (SQLException e)

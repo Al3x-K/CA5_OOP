@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="116c46aa-4ba0-4bde-b337-a2186483eea3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +47,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -55,10 +62,10 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/Asus/IdeaProjects/CA5_Programming/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "configurable.group.build",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -85,7 +92,9 @@
       <workItem from="1710089901995" duration="381000" />
       <workItem from="1710090290372" duration="9781000" />
       <workItem from="1710105457083" duration="88000" />
-      <workItem from="1710105577457" duration="521000" />
+      <workItem from="1710105577457" duration="1790000" />
+      <workItem from="1710107421783" duration="15000" />
+      <workItem from="1710107580544" duration="768000" />
     </task>
     <servers />
   </component>

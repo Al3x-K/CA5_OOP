@@ -11,7 +11,10 @@ import java.util.List;
 
 public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
 {
-    //Created by Aleksandra Kail
+    /**
+     * Main author: Aleksandra Kail
+     *
+     */
     @Override
     public List<Product> getAllProducts() throws DaoException
     {
@@ -64,7 +67,10 @@ public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
         return productList;
     }
 
-    //Created by Aleksandra Kail
+    /**
+     * Main author: Aleksandra Kail
+     *
+     */
     @Override
     public Product getProductById(int productId) throws DaoException
     {
@@ -80,6 +86,7 @@ public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
             String query = "SELECT * FROM PRODUCTS WHERE ProductID = ?";
             preparedStatement = connection.prepareStatement(query);
 
+            preparedStatement.setInt(1,productId);
             resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next())
@@ -113,7 +120,7 @@ public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
             }
             catch (SQLException e)
             {
-                throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+                throw new DaoException("getProductById() " + e.getMessage());
             }
         }
         return product;
