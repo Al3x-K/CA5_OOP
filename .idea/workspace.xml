@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="116c46aa-4ba0-4bde-b337-a2186483eea3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
     </list>
@@ -94,7 +91,7 @@
       <workItem from="1710105457083" duration="88000" />
       <workItem from="1710105577457" duration="1790000" />
       <workItem from="1710107421783" duration="15000" />
-      <workItem from="1710107580544" duration="768000" />
+      <workItem from="1710107580544" duration="2663000" />
     </task>
     <servers />
   </component>

@@ -67,11 +67,62 @@ public class MySqlVendorDao extends MySqlDao implements VendorDaoInterface
         return productList;
     }
 
-    //Created by Aleksandra Kail
+    /**
+     * Main author: Aleksandra Kail
+     *
+     */
     @Override
-    public Vendor getVendorById(int productId)
+    public Vendor getVendorById(int vendorId) throws DaoException
     {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Vendor vendor = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "SELECT * FROM VENDORS WHERE VendorID = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, vendorId);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next())
+            {
+                int vendorID = resultSet.getInt("VendorID");
+                String vendorName = resultSet.getString("VendorName");
+
+                vendor = new Vendor(vendorID,vendorName);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getVendorById() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getVendorById() " + e.getMessage());
+            }
+        }
         return vendor;
     }
 }
