@@ -1,6 +1,6 @@
 package DAOs;
 
-import DTOs.Product;
+import DTOs.Vendor;
 import Exceptions.DaoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,28 +9,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
+public class MySqlVendorDao extends MySqlDao implements VendorDaoInterface
 {
     @Override
-    public List<Product> getAllProducts() throws DaoException
+    public List<Vendor> getAllVendors() throws DaoException
     {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Product> productList = new ArrayList<>();
+        List<Vendor> productList = new ArrayList<>();
 
         try
         {
             connection = this.getConnection();
-            String query = "SELECT * FROM PRODUCTS";
+            String query = "SELECT * FROM VENDORS";
             preparedStatement = connection.prepareStatement(query);
 
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next())
             {
-                int productId = resultSet.getInt("ProductID");
-                String productName = resultSet.getString("ProductName");
-                Product p = new Product(productId,productName);
+                int vendorId = resultSet.getInt("VendorID");
+                String vendorName = resultSet.getString("VendorName");
+                Vendor p = new Vendor(vendorId,vendorName);
                 productList.add(p);
             }
         }
@@ -64,9 +64,9 @@ public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
     }
 
     @Override
-    public Product getProductById(int productId)
+    public Vendor getVendorById(int productId)
     {
-        Product product = null;
-        return product;
+        Vendor vendor = null;
+        return vendor;
     }
 }
