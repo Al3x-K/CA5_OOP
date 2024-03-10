@@ -11,6 +11,7 @@ import java.util.List;
 
 public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
 {
+    //Created by Aleksandra Kail
     @Override
     public List<Product> getAllProducts() throws DaoException
     {
@@ -63,10 +64,58 @@ public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
         return productList;
     }
 
+    //Created by Aleksandra Kail
     @Override
-    public Product getProductById(int productId)
+    public Product getProductById(int productId) throws DaoException
     {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Product product = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "SELECT * FROM PRODUCTS WHERE ProductID = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next())
+            {
+                int productID = resultSet.getInt("ProductID");
+                String productName = resultSet.getString("ProductName");
+
+                product = new Product(productID,productName);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getProductById() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+            }
+        }
         return product;
     }
 }

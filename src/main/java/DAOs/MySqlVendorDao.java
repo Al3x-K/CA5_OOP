@@ -11,6 +11,7 @@ import java.util.List;
 
 public class MySqlVendorDao extends MySqlDao implements VendorDaoInterface
 {
+    //Created by Aleksandra Kail
     @Override
     public List<Vendor> getAllVendors() throws DaoException
     {
@@ -63,6 +64,7 @@ public class MySqlVendorDao extends MySqlDao implements VendorDaoInterface
         return productList;
     }
 
+    //Created by Aleksandra Kail
     @Override
     public Vendor getVendorById(int productId)
     {
