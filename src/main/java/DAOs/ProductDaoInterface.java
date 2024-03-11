@@ -10,4 +10,5 @@ public interface ProductDaoInterface
 
     public Product getProductById(int id) throws DaoException;
 
+    public void deleteProduct(int productId) throws DaoException;
 }

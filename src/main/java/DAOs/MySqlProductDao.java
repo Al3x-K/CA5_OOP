@@ -125,4 +125,50 @@ public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
         }
         return product;
     }
+
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+    @Override
+    public void deleteProduct(int productId) throws DaoException
+    {
+        ProductsVendorsDaoInterface IProductsVendorsDao = new MySqlProductsVendorsDao();
+        IProductsVendorsDao.deleteByProductID(productId);
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "DELETE FROM PRODUCTS WHERE ProductID = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, productId);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("deleteProduct() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("deleteProduct() " + e.getMessage());
+            }
+        }
+    }
 }
