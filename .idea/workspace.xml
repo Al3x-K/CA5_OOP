@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="116c46aa-4ba0-4bde-b337-a2186483eea3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductsVendorsDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAOs/ProductsVendorsDaoInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductsVendorsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductsVendorsDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/ProductDaoInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ProductDaoInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/VendorDaoInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/VendorDaoInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +96,8 @@
       <workItem from="1710107580544" duration="3436000" />
       <workItem from="1710111424272" duration="16000" />
       <workItem from="1710111875355" duration="596000" />
-      <workItem from="1710148176137" duration="1394000" />
+      <workItem from="1710148176137" duration="1714000" />
+      <workItem from="1710151572065" duration="350000" />
     </task>
     <servers />
   </component>

@@ -3,11 +3,7 @@ package DAOs;
 import DTOs.Product;
 import DTOs.Vendor;
 import Exceptions.DaoException;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 

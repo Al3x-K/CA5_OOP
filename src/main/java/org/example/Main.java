@@ -111,7 +111,8 @@ public class Main
 
             if( vendors.isEmpty() )
                 System.out.println("There are no vendors selling product " + id);
-            else {
+            else
+            {
                 for (Vendor v : vendors)
                     System.out.println("Vendor: " + v.toString());
             }
