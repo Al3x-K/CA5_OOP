@@ -7,8 +7,7 @@
     <list default="true" id="116c46aa-4ba0-4bde-b337-a2186483eea3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductsVendorsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductsVendorsDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlVendorDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/ProductDaoInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ProductDaoInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +96,12 @@
       <workItem from="1710111424272" duration="16000" />
       <workItem from="1710111875355" duration="596000" />
       <workItem from="1710148176137" duration="1714000" />
-      <workItem from="1710151572065" duration="350000" />
+      <workItem from="1710151572065" duration="952000" />
+      <workItem from="1710379930582" duration="204000" />
+      <workItem from="1710425318005" duration="612000" />
+      <workItem from="1710431067202" duration="1210000" />
+      <workItem from="1710512065261" duration="7000" />
+      <workItem from="1710695478296" duration="1822000" />
     </task>
     <servers />
   </component>

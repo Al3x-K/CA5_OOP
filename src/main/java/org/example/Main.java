@@ -128,6 +128,19 @@ public class Main
                     System.out.println("Product: " + p.toString());
             }
 
+            Product updatedProduct = new Product("Nose Piercing");
+
+            System.out.println("\nCall: updateProductById()");
+            IProductDao.updateProductById(3,updatedProduct);
+            IProductDao.getProductById(3);
+            if(updatedProduct != null)
+            {
+                System.out.println("Product with id " + id + " was found: " + updatedProduct);
+            }
+            else
+            {
+                System.out.println("Product with id " + id + " is not valid.");
+            }
         }
         catch (DaoException e)
         {
