@@ -19,4 +19,6 @@ public interface ProductsVendorsDaoInterface
     public void deleteByProductID(int productId) throws DaoException;
 
     public void deleteByVendorID(int vendorId) throws DaoException;
+
+
 }

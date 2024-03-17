@@ -1,5 +1,6 @@
 package DAOs;
 
+import DTOs.Product;
 import DTOs.Vendor;
 import Exceptions.DaoException;
 import java.sql.*;
@@ -165,6 +166,57 @@ public class MySqlVendorDao extends MySqlDao implements VendorDaoInterface
             catch (SQLException e)
             {
                 throw new DaoException("deleteVendor() " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Main author: Aleksandra Kail
+     *
+     */
+    @Override
+    public void updateVendorById(int id, Vendor updatedVendor) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "UPDATE Vendors SET VendorName = ? WHERE VendorID = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1,updatedVendor.getName());
+            preparedStatement.setInt(2,id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if(rowsAffected == 0)
+            {
+                throw new DaoException("No Vendor found with ID: " + id);
+            }
+        }
+        catch(SQLException e)
+        {
+            throw new DaoException("updateVendorById() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("updateVendorById() " + e.getMessage());
             }
         }
     }
