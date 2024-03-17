@@ -15,6 +15,7 @@ public class Main
         ProductDaoInterface IProductDao = new MySqlProductDao();
         VendorDaoInterface IVendorDao = new MySqlVendorDao();
         ProductsVendorsDaoInterface IProductsVendorsDao = new MySqlProductsVendorsDao();
+        JsonConverter jsonConverter = new JsonConverter();
 
         try
         {
@@ -186,6 +187,15 @@ public class Main
                 for (Vendor v : vendors)
                     System.out.println("Vendor: " + v.toString());
             }
+
+            System.out.println("\nCall: convertProductListToJsonString()");
+            String jsonString = jsonConverter.convertProductListToJsonString(products);
+            System.out.println(jsonString);
+
+            System.out.println("\nCall: convertVendorListToJsonString()");
+            jsonString = jsonConverter.convertVendorListToJsonString(vendors);
+            System.out.println(jsonString);
+            
         }
         catch (DaoException e)
         {
