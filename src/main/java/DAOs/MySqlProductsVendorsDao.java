@@ -159,41 +159,80 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
     }
 
     @Override
-    public void deleteByVendorID(int vendorId) throws DaoException
-    {
+    public void deleteByVendorID(int vendorId) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        try
-        {
+        try {
             connection = this.getConnection();
             String query = "DELETE FROM PRODUCTSVENDORS WHERE VendorID = ?";
             preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setInt(1, vendorId);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("deleteByVendorID() " + e.getMessage());
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("getVendorsSellingProductId() " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Main author: Aleksandra Kail
+     *
+     */
+    public void updateProductsVendorsById(int pId, int vId, double price, int quantity) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = this.getConnection();
+
+            String query = "UPDATE productsvendors SET price = ?, quantity = ? WHERE productID = ? AND vendorID = ? ";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setDouble(1, price);
+            preparedStatement.setInt(2, quantity);
+            preparedStatement.setInt(3, pId);
+            preparedStatement.setInt(4, vId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new DaoException("No matching record found for product ID " + pId + " and vendor ID: " + vId);
+            }
         }
         catch (SQLException e)
         {
-            throw new DaoException("deleteByVendorID() " + e.getMessage());
+            throw new DaoException("updateProductsVendors() " + e.getMessage());
         }
         finally
         {
             try
             {
-                if (preparedStatement != null)
+                if(preparedStatement != null)
                 {
                     preparedStatement.close();
                 }
-                if (connection != null)
+                if(connection != null)
                 {
                     freeConnection(connection);
                 }
             }
             catch (SQLException e)
             {
-                throw new DaoException("getVendorsSellingProductId() " + e.getMessage());
+                throw new DaoException("updateProductsVendors() " + e.getMessage());
             }
         }
     }
+
 }

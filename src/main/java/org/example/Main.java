@@ -15,10 +15,11 @@ public class Main
         ProductDaoInterface IProductDao = new MySqlProductDao();
         VendorDaoInterface IVendorDao = new MySqlVendorDao();
         ProductsVendorsDaoInterface IProductsVendorsDao = new MySqlProductsVendorsDao();
+
         try
         {
             /**
-             * Main author: Aleksandra Kail 
+             * Main author: Aleksandra Kail
              *
              */
             System.out.println("\nCall getAllProducts()");
@@ -164,6 +165,27 @@ public class Main
                 System.out.println("Vendor with id " + id + " is not valid.");
             }
 
+            System.out.println("\nCall: updateProductsVendorsById()");
+            int pID = 3;
+            int vID = 2;
+            double newPrice = 99.99;
+            int newQuantity =17;
+            IProductsVendorsDao.updateProductsVendorsById(pID,vID,newPrice,newQuantity);
+            IProductsVendorsDao.getProductsSoldByVendorId(2);
+            if( products.isEmpty() )
+                System.out.println("There are no products sold by vendor " + id);
+            else {
+                for (Product p : products)
+                    System.out.println("Product: " + p.toString());
+            }
+            IProductsVendorsDao.getVendorsSellingProductId(3);
+            if( vendors.isEmpty() )
+                System.out.println("There are no vendors selling product " + id);
+            else
+            {
+                for (Vendor v : vendors)
+                    System.out.println("Vendor: " + v.toString());
+            }
         }
         catch (DaoException e)
         {
