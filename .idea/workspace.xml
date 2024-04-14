@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="116c46aa-4ba0-4bde-b337-a2186483eea3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductsVendorsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/MySqlProductsVendorsDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAOs/ProductsVendorsDaoInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAOs/ProductsVendorsDaoInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +43,9 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
     &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
@@ -66,6 +68,37 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager" selected="Application.Client">
+    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Client" />
+      <module name="CA5_Programming" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="org.example.Server" />
+      <module name="CA5_Programming" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Server" />
+      <item itemvalue="Application.Client" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Client" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -107,6 +140,7 @@
       <workItem from="1711034802849" duration="28000" />
       <workItem from="1712929353753" duration="441000" />
       <workItem from="1713093746728" duration="3378000" />
+      <workItem from="1713100914593" duration="1308000" />
     </task>
     <servers />
   </component>
