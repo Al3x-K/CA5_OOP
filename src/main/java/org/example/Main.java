@@ -19,10 +19,12 @@ public class Main
 
         try
         {
+
             /**
              * Main author: Aleksandra Kail
              *
              */
+            /*
             System.out.println("\nCall getAllProducts()");
             List<Product> products = IProductDao.getAllProducts();
 
@@ -102,12 +104,12 @@ public class Main
             {
                 System.out.println("Vendor with id " + vendorId + " is not valid.");
             }
-
+               */
             /**
              * Main author: Samuel Sukovský
              *
              */
-
+/*
             IProductDao.deleteProduct(1);
             IVendorDao.deleteVendor(1);
 
@@ -135,12 +137,12 @@ public class Main
             }
 
             Product updatedProduct = new Product("Nose Piercing");
-
+            */
             /**
              * Main author: Aleksandra Kail
              *
              */
-
+/*
             System.out.println("\nCall: updateProductById()");
             IProductDao.updateProductById(3,updatedProduct);
             IProductDao.getProductById(3);
@@ -195,7 +197,19 @@ public class Main
             System.out.println("\nCall: convertVendorListToJsonString()");
             jsonString = jsonConverter.convertVendorListToJsonString(vendors);
             System.out.println(jsonString);
-            
+*/
+            /**
+             * Main author: Samuel Sukovský
+             *
+             */
+            System.out.println("\nCall: ConvertProductToJsonString()");
+            String jsonString = jsonConverter.ConvertProductToJsonString(IProductDao.getProductById(1));
+            System.out.println(jsonString);
+
+            System.out.println("\nCall: ConvertVendorToJsonString()");
+            jsonString = jsonConverter.ConvertVendorToJsonString(IVendorDao.getVendorById(1));
+            System.out.println(jsonString);
+
         }
         catch (DaoException e)
         {

@@ -13,6 +13,10 @@ public class JsonConverter
         this.gson = new Gson();
     }
 
+    /**
+     * Main author: Aleksandra Kail
+     *
+     */
     public <Product> String convertProductListToJsonString(List<Product> productList)
     {
         return gson.toJson(productList);
@@ -21,6 +25,20 @@ public class JsonConverter
     public <Vendor> String convertVendorListToJsonString(List<Vendor> vendorList)
     {
         return gson.toJson(vendorList);
+    }
+
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+    public <Product> String ConvertProductToJsonString(Product product)
+    {
+        return gson.toJson(product);
+    }
+
+    public <Vendor> String ConvertVendorToJsonString(Vendor vendor)
+    {
+        return gson.toJson(vendor);
     }
 
 }
