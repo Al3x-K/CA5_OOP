@@ -15,4 +15,6 @@ public interface VendorDaoInterface
 
     public void updateVendorById(int id, Vendor updatedVendor) throws DaoException;
 
+    public void insertVendor(Vendor vendor) throws DaoException;
+
 }

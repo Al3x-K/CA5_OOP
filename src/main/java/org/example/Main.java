@@ -202,6 +202,7 @@ public class Main
              * Main author: Samuel Sukovský
              *
              */
+            /*
             System.out.println("\nCall: ConvertProductToJsonString()");
             String jsonString = jsonConverter.ConvertProductToJsonString(IProductDao.getProductById(1));
             System.out.println(jsonString);
@@ -209,14 +210,23 @@ public class Main
             System.out.println("\nCall: ConvertVendorToJsonString()");
             jsonString = jsonConverter.ConvertVendorToJsonString(IVendorDao.getVendorById(1));
             System.out.println(jsonString);
+            */
+
 
             /**
              * Main author: Aleksandra Kail
              *
              */
+            /*
             System.out.println("\nCall: insertProduct()");
             Product p = new Product(11, "Hair Clip");
             IProductDao.insertProducts(p);
+            */
+            System.out.println("\nCall: insertVendor()");
+            Vendor v = new Vendor(4, "Golden");
+            IVendorDao.insertVendor(v);
+
+
         }
         catch (DaoException e)
         {
