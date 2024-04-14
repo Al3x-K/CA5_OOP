@@ -217,15 +217,18 @@ public class Main
              * Main author: Aleksandra Kail
              *
              */
-            /*
+
             System.out.println("\nCall: insertProduct()");
             Product p = new Product(11, "Hair Clip");
-            IProductDao.insertProducts(p);
-            */
+            //IProductDao.insertProducts(p);
+
+
             System.out.println("\nCall: insertVendor()");
             Vendor v = new Vendor(4, "Golden");
-            IVendorDao.insertVendor(v);
+            //IVendorDao.insertVendor(v);
 
+            System.out.println("\nCall: insertOffer()");
+            IProductsVendorsDao.insertOffer(p,v,25.99, 4);
 
         }
         catch (DaoException e)

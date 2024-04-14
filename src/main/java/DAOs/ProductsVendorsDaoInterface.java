@@ -21,4 +21,6 @@ public interface ProductsVendorsDaoInterface
     public void deleteByVendorID(int vendorId) throws DaoException;
 
     public void updateProductsVendorsById(int pId, int vId, double price, int quantity) throws DaoException;
+
+    public void insertOffer(Product p, Vendor v, double price, int quantity) throws DaoException;
 }

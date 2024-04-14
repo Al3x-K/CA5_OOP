@@ -235,4 +235,46 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         }
     }
 
+    public void insertOffer(Product p, Vendor v, double price, int quantity) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "INSERT INTO productsvendors (ProductID, VendorID, Price, Quantity) VALUES (?,?,?,?)";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, p.getId());
+            preparedStatement.setInt(2, v.getId());
+            preparedStatement.setDouble(3, price);
+            preparedStatement.setInt(4, quantity);
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("updateProductsVendors() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("updateProductsVendors() " + e.getMessage());
+            }
+        }
+    }
+
 }
