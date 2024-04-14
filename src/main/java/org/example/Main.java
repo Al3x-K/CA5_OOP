@@ -210,6 +210,13 @@ public class Main
             jsonString = jsonConverter.ConvertVendorToJsonString(IVendorDao.getVendorById(1));
             System.out.println(jsonString);
 
+            /**
+             * Main author: Aleksandra Kail
+             *
+             */
+            System.out.println("\nCall: insertProduct()");
+            Product p = new Product(11, "Hair Clip");
+            IProductDao.insertProducts(p);
         }
         catch (DaoException e)
         {

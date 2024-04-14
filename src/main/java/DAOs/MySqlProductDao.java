@@ -169,13 +169,48 @@ public class MySqlProductDao extends MySqlDao implements ProductDaoInterface
         }
     }
     /**
-     * Main author: Dannan Daly
+     * Main author: Aleksandra Kail
      *
      */
 
-    public void insertProducts() {
+    public void insertProducts(Product product) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-        
+        try
+        {
+            connection = this.getConnection();
+            String query = "INSERT INTO products (ProductID, ProductName) VALUES (?,?)";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, product.getId());
+            preparedStatement.setString(2, product.getName());
+
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            throw new DaoException("insertProducts() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("insertProducts() " + e.getMessage());
+            }
+        }
     }
 
     /**
