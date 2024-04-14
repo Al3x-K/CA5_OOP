@@ -21,6 +21,7 @@ public class Client
         {
             System.out.println("The client is running and has connected to the server.");
 
+            label:
             while(true)
             {
                 //Display menu:
@@ -28,6 +29,13 @@ public class Client
                 System.out.println("2. Display Vendor by ID");
                 System.out.println("3. Display Vendors selling chosen Product");
                 System.out.println("4. Display Products sold by chosen Vendor");
+                System.out.println("5. Display all Products");
+                System.out.println("6. Display all Vendors");
+                System.out.println("7. Display all Offers");
+                System.out.println("8. Add Product to an order");
+                System.out.println("9. DeleteProduct from the order");
+                System.out.println("10.Get Images List");
+                System.out.println("11. Exit");
                 System.out.println();
                 System.out.print("Choose an option: ");
 
@@ -36,43 +44,64 @@ public class Client
                 //Send user's option to the server
                 out.println(option);
 
-                if(option.equals("1"))
-                {
-                    System.out.print("Enter ID: ");
-                    String id = console.readLine();
-                    //Send ID to the server
-                    out.println(id);
-                    String pString = in.readLine();
-                    System.out.println("Response from the server: " + pString);
-                }
-                else if(option.equals("2"))
-                {
-                    System.out.print("Enter ID: ");
-                    String id = console.readLine();
-                    out.println(id);
-                    String vString = in.readLine();
-                    System.out.println("Response from the server: " + vString);
-                }
-                else if(option.equals("3"))
-                {
-                    System.out.print("Enter ID: ");
-                    String id = console.readLine();
-                    out.println(id);
-                    String vPString = in.readLine();
-                    System.out.println("Response from the server: " + vPString);
-                }
-                else if(option.equals("4"))
-                {
-                    System.out.print("Enter ID: ");
-                    String id = console.readLine();
-                    out.println(id);
-                    String pVString = in.readLine();
-                    System.out.println("Response from the server: " + pVString);
-                }
-                else
-                {
-                    System.out.println("Invalid request or error in response");
-                    break;
+                switch (option) {
+                    case "1": {
+                        System.out.print("Enter ID: ");
+                        String id = console.readLine();
+                        //Send ID to the server
+                        out.println(id);
+                        String pString = in.readLine();
+                        System.out.println("Response from the server: " + pString);
+                        break;
+                    }
+                    case "2": {
+                        System.out.print("Enter ID: ");
+                        String id = console.readLine();
+                        out.println(id);
+                        String vString = in.readLine();
+                        System.out.println("Response from the server: " + vString);
+                        break;
+                    }
+                    case "3": {
+                        System.out.print("Enter ID: ");
+                        String id = console.readLine();
+                        out.println(id);
+                        String vPString = in.readLine();
+                        System.out.println("Response from the server: " + vPString);
+                        break;
+                    }
+                    case "4": {
+                        System.out.print("Enter ID: ");
+                        String id = console.readLine();
+                        out.println(id);
+                        String pVString = in.readLine();
+                        System.out.println("Response from the server: " + pVString);
+                        break;
+                    }
+                    case "5":
+
+                        break;
+                    case "6":
+
+                        break;
+                    case "7":
+
+                        break;
+                    case "8":
+
+                        break;
+                    case "9":
+
+                        break;
+                    case "10":
+
+                        break;
+                    case "11":
+
+                        break;
+                    default:
+                        System.out.println("Invalid request or error in response");
+                        break label;
                 }
 
                 String jsonResponse = in.readLine();
