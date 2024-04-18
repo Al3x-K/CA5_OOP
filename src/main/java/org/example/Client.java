@@ -31,6 +31,7 @@ public class Client
             Scanner console = new Scanner(System.in);
             String userRequest = "";
             String response;
+            String jsonResponse;
 
             while (userRequest != "11")
             {
@@ -93,11 +94,11 @@ public class Client
                     case "5":
                         response = in.readLine();
                         System.out.println("Products: " + response);
-                        break;
+                        continue;
                     case "6":
                         response = in.readLine();
                         System.out.println("Vendors: " + response);
-                        break;
+                        continue;
                     case "7":
                         response = in.readLine();
                         System.out.println("Offers: " + response);
@@ -118,13 +119,12 @@ public class Client
                         System.out.println("Invalid request or error in response");
                         break;
                 }
-                String jsonResponse = in.readLine();
+                jsonResponse = in.readLine();
                 if(jsonResponse != null)
                 {
                     System.out.println("Received JSON data: ");
                     System.out.println(jsonResponse);
                 }
-
                 console = new Scanner(System.in);
                 System.out.println();
             }
