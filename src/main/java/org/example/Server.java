@@ -1,3 +1,4 @@
+
 package org.example;
 
 import java.io.BufferedReader;
@@ -7,12 +8,15 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import Exceptions.DaoException;
 import DAOs.*;
+import DTOs.Vendor;
+import Exceptions.DaoException;
 
-public class Server {
+public class Server
+{
     /**
      * Main author: Aleksandra Kail
+     * Modified by: Samuel Sukovský
      */
     final int PORT = 8888; //port number to listen for
 
@@ -120,7 +124,7 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
         String request;
         try
         {
-            while ((request = socketReader.readLine()) != null)
+            while  ((request = socketReader.readLine()) != null)
             {
                 System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request);
                 switch (request)
@@ -154,10 +158,15 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
                         socketWriter.println(jsonString);
                         break;
                     case "5":
+                        jsonString = jsonConverter.convertProductListToJsonString(IProductDao.getAllProducts());
+                        socketWriter.println(jsonString);
                         break;
                     case "6":
+                        jsonString = jsonConverter.convertVendorListToJsonString(IVendorDao.getAllVendors());
+                        socketWriter.println(jsonString);
                         break;
                     case "7":
+
                         break;
                     case "8":
                         break;
@@ -170,26 +179,26 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
                     default:
                         socketWriter.println("Invalid option");
                         break;
-                    }
                 }
             }
-            catch (IOException | DaoException ex)
+        }
+        catch (IOException | DaoException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            this.socketWriter.close();
+            try
+            {
+                this.socketReader.close();
+                this.clientSocket.close();
+            }
+            catch (IOException ex)
             {
                 ex.printStackTrace();
             }
-            finally
-            {
-                this.socketWriter.close();
-                try
-                {
-                    this.socketReader.close();
-                    this.clientSocket.close();
-                }
-                catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
+        }
         System.out.println("Server: (ClientHandler): Handler for Client " + clientNumber + " is terminating .....");
     }
 }
