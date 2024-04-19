@@ -166,7 +166,7 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
                         socketWriter.println(jsonString);
                         break;
                     case "7":
-                        jsonString = jsonConverter.
+
                         break;
                     case "8":
                         break;
