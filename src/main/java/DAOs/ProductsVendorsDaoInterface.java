@@ -1,7 +1,6 @@
 package DAOs;
 
-import DTOs.Product;
-import DTOs.Vendor;
+import DTOs.*;
 import Exceptions.DaoException;
 
 import java.util.List;
@@ -15,6 +14,14 @@ public interface ProductsVendorsDaoInterface
     public List<Product> getProductsSoldByVendorId(int vendorId) throws DaoException;
 
     public List<Vendor> getVendorsSellingProductId(int productId) throws DaoException;
+
+    public List<Offer> getOffersByVendorId(int vendorId) throws DaoException;
+
+    public List<Offer> getOffersByProductId(int productId) throws DaoException;
+
+    public Product getCheapestProductSoldByVendor(int vendorId) throws DaoException;
+
+    public Vendor getVendorSellingProductForCheapest(int productId) throws DaoException;
 
     public void deleteByProductID(int productId) throws DaoException;
 

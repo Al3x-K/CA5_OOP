@@ -60,8 +60,8 @@ public class Client
                         String id = console.next();
                         //Send ID to the server
                         out.println(id);
-                        String pString = in.readLine();
-                        System.out.println("Response from the server: " + pString);
+                        response = in.readLine();
+                        System.out.println("Response from the server: " + response);
                         break;
                     }
                     case "2":
@@ -69,8 +69,8 @@ public class Client
                         System.out.print("Enter ID: ");
                         String id = console.next();
                         out.println(id);
-                        String vString = in.readLine();
-                        System.out.println("Response from the server: " + vString);
+                        response = in.readLine();
+                        System.out.println("Response from the server: " + response);
                         break;
                     }
                     case "3":
@@ -78,8 +78,8 @@ public class Client
                         System.out.print("Enter ID: ");
                         String id = console.next();
                         out.println(id);
-                        String vPString = in.readLine();
-                        System.out.println("Response from the server: " + vPString);
+                        response= in.readLine();
+                        System.out.println("Response from the server: " + response);
                         break;
                     }
                     case "4":
@@ -87,8 +87,8 @@ public class Client
                         System.out.print("Enter ID: ");
                         String id = console.next();
                         out.println(id);
-                        String pVString = in.readLine();
-                        System.out.println("Response from the server: " + pVString);
+                        response= in.readLine();
+                        System.out.println("Response from the server: " + response);
                         break;
                     }
                     case "5":

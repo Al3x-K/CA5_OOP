@@ -1,7 +1,6 @@
 package DAOs;
 
-import DTOs.Product;
-import DTOs.Vendor;
+import DTOs.*;
 import Exceptions.DaoException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -118,6 +117,239 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         }
         return vendorList;
     }
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+    @Override
+    public List<Offer> getOffersByVendorId(int vendorId) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Offer> offerList = new ArrayList<>();
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "SELECT ProductID, VendorID, ProductName, Price, Quantity FROM PRODUCTS JOIN PRODUCTSVENDORS USING(ProductID) WHERE VendorID = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1,vendorId);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+                int productId = resultSet.getInt("ProductID");
+                String productName = resultSet.getString("ProductName");
+                double price = resultSet.getDouble("Price");
+                int quantity = resultSet.getInt("Quantity");
+                Offer o = new Offer(productId, vendorId, productName, price, quantity);
+                offerList.add(o);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getOffersByVendorId() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getProductsSoldByVendorId() " + e.getMessage());
+            }
+        }
+        return offerList;
+    }
+
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+
+    @Override
+    public List<Offer> getOffersByProductId(int productId) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Offer> offerList = new ArrayList<>();
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "SELECT ProductID, VendorID, ProductName, Price, Quantity FROM PRODUCTS JOIN PRODUCTSVENDORS USING(ProductID) WHERE ProductID = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, productId);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+                int vendorId = resultSet.getInt("VendorID");
+                String productName = resultSet.getString("ProductName");
+                double price = resultSet.getDouble("Price");
+                int quantity = resultSet.getInt("Quantity");
+                Offer o = new Offer(productId, vendorId, productName, price, quantity);
+                offerList.add(o);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getVendorsSellingProductId() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getVendorsSellingProductId() " + e.getMessage());
+            }
+        }
+        return offerList;
+    }
+
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+    @Override
+    public Product getCheapestProductSoldByVendor(int vendorId) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Product product = null;
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "SELECT ProductID, ProductName FROM PRODUCTS JOIN PRODUCTSVENDORS USING(ProductID) WHERE VendorID = ? ORDER BY Price ASC";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, vendorId);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next())
+            {
+                int productId = resultSet.getInt("ProductID");
+                String productName = resultSet.getString("ProductName");
+
+                product = new Product(productId, productName);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getCheapestProductSoldByVendor() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getCheapestProductSoldByVendor() " + e.getMessage());
+            }
+        }
+        return product;
+    }
+
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+    @Override
+    public Vendor getVendorSellingProductForCheapest(int productId) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Vendor vendor = null;
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "SELECT VendorID, VendorName FROM VENDORS JOIN PRODUCTSVENDORS USING(VendorID) WHERE ProductID = ? ORDER BY Price ASC";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, productId);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next())
+            {
+                int vendorId = resultSet.getInt("VendorID");
+                String vendorName = resultSet.getString("VendorName");
+
+                vendor = new Vendor(vendorId, vendorName);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getVendorSellingProductForCheapest() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getVendorSellingProductForCheapest() " + e.getMessage());
+            }
+        }
+        return vendor;
+    }
+
 
     @Override
     public void deleteByProductID(int productId) throws DaoException
