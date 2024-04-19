@@ -1,16 +1,17 @@
 
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import DAOs.*;
-import DTOs.Vendor;
 import Exceptions.DaoException;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server
 {
@@ -93,6 +94,7 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
     PrintWriter socketWriter;
     Socket clientSocket;
     final int clientNumber;
+    final String imgDirectory = "src/images/";
 
     // Constructor
     public ClientHandler(Socket clientSocket, int clientNumber)
@@ -173,6 +175,8 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
                     case "9":
                         break;
                     case "10":
+                        List<String> imageList = getImageList();
+                        socketWriter.println(imageList.toString());
                         break;
                     case "11":
                         break;
@@ -200,5 +204,42 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
             }
         }
         System.out.println("Server: (ClientHandler): Handler for Client " + clientNumber + " is terminating .....");
+    }
+
+    public List<String> getImageList()
+    {
+        List<String> imageList = new ArrayList<>();
+        File directory = new File(this.imgDirectory);
+        File[] files = directory.listFiles();
+        if (files != null)
+        {
+            for(File file : files)
+            {
+                if(file.isFile() && file.getName().endsWith(".jpg"))
+                {
+                    imageList.add(file.getName());
+                }
+            }
+        }
+        return imageList;
+    }
+
+    public void sendImageToClient(Socket clientSocket, String imgName) throws IOException
+    {
+        try(BufferedOutputStream out = new BufferedOutputStream(clientSocket.getOutputStream()))
+        {
+            File imgFile = new File(imgDirectory + imgName);
+            if(imgFile.exists())
+            {
+                byte[] imageData = Files.readAllBytes(Paths.get(imgFile.getPath()));
+                out.write(imageData, 0, imageData.length);
+                out.flush();
+                System.out.println("Sent image: " + imgName + " to Client.");
+            }
+            else
+            {
+                System.out.println("Image file not found: " + imgName);
+            }
+        }
     }
 }

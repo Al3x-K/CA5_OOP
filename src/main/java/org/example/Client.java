@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client
@@ -110,8 +111,14 @@ public class Client
 
                         break;
                     case "10":
-
-                        break;
+                        response = in.readLine();
+                        List<String> imageList = parseImageList(response);
+                        System.out.println("Available images: ");
+                        for(int i = 0; i < imageList.size(); i++)
+                        {
+                            System.out.println((i + 1) + ". " + imageList.get(i));
+                        }
+                        continue;
                     case "11":
 
                         break;
@@ -134,5 +141,12 @@ public class Client
             System.out.println("Client message: IOException: " + e);
         }
         System.out.println("Exiting client, but server may still be running.");
+    }
+
+    public static List<String> parseImageList(String imgListJson)
+    {
+        String[] images = imgListJson.substring(1,imgListJson.length() - 1).split(", ");
+        List<String> imageList = List.of(images);
+        return imageList;
     }
 }
