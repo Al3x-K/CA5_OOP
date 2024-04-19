@@ -94,7 +94,8 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
     PrintWriter socketWriter;
     Socket clientSocket;
     final int clientNumber;
-    final String imgDirectory = "src/images/";
+    final String imgDirectory = "C:\\Users\\Asus\\IdeaProjects\\CA5_Programming\\images";
+    private static DataOutputStream dataOutputStream = null;
 
     // Constructor
     public ClientHandler(Socket clientSocket, int clientNumber)
@@ -120,6 +121,11 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
         VendorDaoInterface IVendorDao = new MySqlVendorDao();
         ProductsVendorsDaoInterface IProductsVendorsDao = new MySqlProductsVendorsDao();
         JsonConverter jsonConverter = new JsonConverter();
+        try {
+            dataOutputStream = new DataOutputStream( clientSocket.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         int id;
         String jsonString;
@@ -173,6 +179,9 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
                     case "10":
                         List<String> imageList = getImageList();
                         socketWriter.println(imageList.toString());
+                        String name = socketReader.readLine();
+                        String selectedImage = name.substring(name.indexOf(":") + 1);
+                        sendFile(imgDirectory + "/" + selectedImage);
                         break;
                     case "11":
                         break;
@@ -185,6 +194,10 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
         catch (IOException | DaoException ex)
         {
             ex.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
         }
         finally
         {
@@ -220,22 +233,22 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
         return imageList;
     }
 
-    public void sendImageToClient(Socket clientSocket, String imgName) throws IOException
+    private static void sendFile(String path) throws Exception
     {
-        try(BufferedOutputStream out = new BufferedOutputStream(clientSocket.getOutputStream()))
+        int bytes = 0;
+        File file = new File(path);
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        dataOutputStream.writeLong(file.length());
+
+        byte[] buffer = new byte[4 * 1024];
+
+        while ((bytes = fileInputStream.read(buffer))!= -1)
         {
-            File imgFile = new File(imgDirectory + imgName);
-            if(imgFile.exists())
-            {
-                byte[] imageData = Files.readAllBytes(Paths.get(imgFile.getPath()));
-                out.write(imageData, 0, imageData.length);
-                out.flush();
-                System.out.println("Sent image: " + imgName + " to Client.");
-            }
-            else
-            {
-                System.out.println("Image file not found: " + imgName);
-            }
+            dataOutputStream.write(buffer, 0, bytes);
+            dataOutputStream.flush();
         }
+
+        fileInputStream.close();
     }
 }

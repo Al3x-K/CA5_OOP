@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Client
 {
+    private static DataInputStream dataInputStream = null;
     /**
      * Main author: Aleksandra Kail
      * Modified by: Samuel Sukovský
@@ -27,13 +28,15 @@ public class Client
             PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())))
             {
-            System.out.println("Client message: The Client is running and has connected to the server");
+                dataInputStream = new DataInputStream(socket.getInputStream());
+
+                System.out.println("Client message: The Client is running and has connected to the server");
 
             Scanner console = new Scanner(System.in);
             String userRequest = "";
             String response;
             JsonConverter jsonConverter = new JsonConverter();
-           
+
 
             while (userRequest != "11")
             {
@@ -131,12 +134,12 @@ public class Client
                         {
                             System.out.println((i + 1) + ". " + imageList.get(i));
                         }
-                        System.out.println("Select an image to dpwnload (enter number)");
-                        int imgIndex = Integer.parseInt(in.readLine()) - 1;
+                        System.out.println("Select an image to download (enter number)");
+                        int imgIndex = Integer.parseInt(console.nextLine()) - 1;
                         String selectedImage = imageList.get(imgIndex);
 
-                        out.println("Get image: " + selectedImage);
-                        saveImageFromServer(in,selectedImage);
+                        out.println("Get image:" + selectedImage);
+                        receiveFile(selectedImage);
                         break;
                     case "11":
                         break;
@@ -151,6 +154,9 @@ public class Client
         catch (IOException e)
         {
             System.out.println("Client message: IOException: " + e);
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
         }
         System.out.println("Exiting client, but server may still be running.");
     }
@@ -171,17 +177,31 @@ public class Client
         return imageList;
     }
 
-    public static void saveImageFromServer(BufferedReader in, String imageName) throws IOException {
-        try (BufferedInputStream imageStream = new BufferedInputStream(in);
-             BufferedOutputStream fileStream = new BufferedOutputStream(new FileOutputStream("downloaded_" + imageName))) {
+    private static void receiveFile(String fileName) throws Exception
+    {
+        FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = imageStream.read(buffer)) != -1) {
-                fileStream.write(buffer, 0, bytesRead);
-            }
+        long bytes_remaining = dataInputStream.readLong();
+        System.out.println("Server: file size in bytes = " + bytes_remaining);
 
-            System.out.println("Image downloaded and saved: " + "downloaded_" + imageName);
+        byte[] buffer = new byte[4 * 1024];
+
+        System.out.println("Server:  Bytes remaining to be read from socket: ");
+        int bytes_read = 0;
+
+        while (bytes_remaining > 0 &&  (bytes_read =
+                dataInputStream.read(buffer, 0,(int)Math.min(buffer.length, bytes_remaining))) != -1) {
+
+
+
+            fileOutputStream.write(buffer, 0, bytes_read);
+
+            bytes_remaining = bytes_remaining - bytes_read;
+
+            System.out.print(bytes_remaining + ", ");
         }
+
+        System.out.println("File is Received");
+        fileOutputStream.close();
     }
 }
