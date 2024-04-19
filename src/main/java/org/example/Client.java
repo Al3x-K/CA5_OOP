@@ -1,10 +1,10 @@
 
 package org.example;
 
+import DTOs.*;
+
 import java.io.*;
-import java.util.ArrayList;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,13 +26,14 @@ public class Client
         try(Socket socket = new Socket("localhost", 8888);
             PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())))
-        {
+            {
             System.out.println("Client message: The Client is running and has connected to the server");
 
             Scanner console = new Scanner(System.in);
             String userRequest = "";
             String response;
-            String jsonResponse;
+            JsonConverter jsonConverter = new JsonConverter();
+           
 
             while (userRequest != "11")
             {
@@ -62,7 +63,8 @@ public class Client
                         //Send ID to the server
                         out.println(id);
                         response = in.readLine();
-                        System.out.println("Response from the server: " + response);
+                        Product product = jsonConverter.ConvertJsonStringToObject(response, Product.class);
+                        System.out.println("\nResponse from the server: \n" + product + "\n");
                         break;
                     }
                     case "2":
@@ -71,7 +73,8 @@ public class Client
                         String id = console.next();
                         out.println(id);
                         response = in.readLine();
-                        System.out.println("Response from the server: " + response);
+                        Vendor vendor = jsonConverter.ConvertJsonStringToObject(response, Vendor.class);
+                        System.out.println("\nResponse from the server: \n" + vendor + "\n");
                         break;
                     }
                     case "3":
@@ -79,8 +82,10 @@ public class Client
                         System.out.print("Enter ID: ");
                         String id = console.next();
                         out.println(id);
-                        response= in.readLine();
-                        System.out.println("Response from the server: " + response);
+                        response = in.readLine();
+                        List<Vendor> vendorList = jsonConverter.convertJsonStringToList(response, Vendor.class);
+                        System.out.println("\nResponse from the server:");
+                        displayList(vendorList);
                         break;
                     }
                     case "4":
@@ -88,21 +93,29 @@ public class Client
                         System.out.print("Enter ID: ");
                         String id = console.next();
                         out.println(id);
-                        response= in.readLine();
-                        System.out.println("Response from the server: " + response);
+                        response = in.readLine();
+                        List<Product> productList = jsonConverter.convertJsonStringToList(response, Product.class);
+                        System.out.println("\nResponse from the server:");
+                        displayList(productList);
                         break;
                     }
                     case "5":
                         response = in.readLine();
-                        System.out.println("Products: " + response);
-                        continue;
+                        List<Product> productList = jsonConverter.convertJsonStringToList(response, Product.class);
+                        System.out.println("\nResponse from the server:");
+                        displayList(productList);
+                        break;
                     case "6":
                         response = in.readLine();
-                        System.out.println("Vendors: " + response);
-                        continue;
+                        List<Vendor> vendorList = jsonConverter.convertJsonStringToList(response, Vendor.class);
+                        System.out.println("\nResponse from the server:");
+                        displayList(vendorList);
+                        break;
                     case "7":
                         response = in.readLine();
-                        System.out.println("Offers: " + response);
+                        List<Offer> offerList = jsonConverter.convertJsonStringToList(response, Offer.class);
+                        System.out.println("\nResponse from the server:");
+                        displayList(offerList);
                         break;
                     case "8":
 
@@ -118,22 +131,21 @@ public class Client
                         {
                             System.out.println((i + 1) + ". " + imageList.get(i));
                         }
-                        continue;
-                    case "11":
+                        System.out.println("Select an image to dpwnload (enter number)");
+                        int imgIndex = Integer.parseInt(in.readLine()) - 1;
+                        String selectedImage = imageList.get(imgIndex);
 
+                        out.println("Get image: " + selectedImage);
+                        saveImageFromServer(in,selectedImage);
+                        break;
+                    case "11":
                         break;
                     default:
                         System.out.println("Invalid request or error in response");
                         break;
                 }
-                jsonResponse = in.readLine();
-                if(jsonResponse != null)
-                {
-                    System.out.println("Received JSON data: ");
-                    System.out.println(jsonResponse);
-                }
+
                 console = new Scanner(System.in);
-                System.out.println();
             }
         }
         catch (IOException e)
@@ -143,10 +155,33 @@ public class Client
         System.out.println("Exiting client, but server may still be running.");
     }
 
+    private <T> void displayList(List<T> list)
+    {
+        for (T object : list)
+        {
+            System.out.println(object);
+        }
+        System.out.println();
+    }
+
     public static List<String> parseImageList(String imgListJson)
     {
         String[] images = imgListJson.substring(1,imgListJson.length() - 1).split(", ");
         List<String> imageList = List.of(images);
         return imageList;
+    }
+
+    public static void saveImageFromServer(BufferedReader in, String imageName) throws IOException {
+        try (BufferedInputStream imageStream = new BufferedInputStream(in);
+             BufferedOutputStream fileStream = new BufferedOutputStream(new FileOutputStream("downloaded_" + imageName))) {
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = imageStream.read(buffer)) != -1) {
+                fileStream.write(buffer, 0, bytesRead);
+            }
+
+            System.out.println("Image downloaded and saved: " + "downloaded_" + imageName);
+        }
     }
 }

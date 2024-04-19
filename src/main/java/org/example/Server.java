@@ -124,51 +124,47 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
         int id;
         String jsonString;
         String request;
-        try
-        {
-            while  ((request = socketReader.readLine()) != null)
-            {
-                System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request);
-                switch (request)
-                {
+        try {
+            while ((request = socketReader.readLine()) != null) {
+                switch (request) {
                     case "1":
                         id = Integer.parseInt(socketReader.readLine());
-                        System.out.println(id);
-                        socketWriter.println("Display Product by ID: ");
-                        jsonString = jsonConverter.ConvertProductToJsonString(IProductDao.getProductById(id));
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request + ", " + id);
+                        jsonString = jsonConverter.ConvertObjectToJsonString(IProductDao.getProductById(id));
                         socketWriter.println(jsonString);
                         break;
                     case "2":
                         id = Integer.parseInt(socketReader.readLine());
-                        System.out.println(id);
-                        socketWriter.println("Display Vendor by ID: ");
-                        jsonString = jsonConverter.ConvertProductToJsonString(IVendorDao.getVendorById(id));
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request + ", " + id);
+                        jsonString = jsonConverter.ConvertObjectToJsonString(IVendorDao.getVendorById(id));
                         socketWriter.println(jsonString);
                         break;
                     case "3":
                         id = Integer.parseInt(socketReader.readLine());
-                        System.out.println(id);
-                        socketWriter.println("Display Vendors selling chosen Product: ");
-                        jsonString = jsonConverter.convertVendorListToJsonString(IProductsVendorsDao.getVendorsSellingProductId(id));
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request + ", " + id);
+                        jsonString = jsonConverter.convertListToJsonString(IProductsVendorsDao.getVendorsSellingProductId(id));
                         socketWriter.println(jsonString);
                         break;
                     case "4":
                         id = Integer.parseInt(socketReader.readLine());
-                        System.out.println(id);
-                        socketWriter.println("Display Products sold by chosen Vendor: ");
-                        jsonString = jsonConverter.ConvertProductToJsonString(IProductsVendorsDao.getProductsSoldByVendorId(id));
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request + ", " + id);
+                        jsonString = jsonConverter.ConvertObjectToJsonString(IProductsVendorsDao.getProductsSoldByVendorId(id));
                         socketWriter.println(jsonString);
                         break;
                     case "5":
-                        jsonString = jsonConverter.convertProductListToJsonString(IProductDao.getAllProducts());
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request);
+                        jsonString = jsonConverter.convertListToJsonString(IProductDao.getAllProducts());
                         socketWriter.println(jsonString);
                         break;
                     case "6":
-                        jsonString = jsonConverter.convertVendorListToJsonString(IVendorDao.getAllVendors());
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request);
+                        jsonString = jsonConverter.convertListToJsonString(IVendorDao.getAllVendors());
                         socketWriter.println(jsonString);
                         break;
                     case "7":
-
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request);
+                        jsonString = jsonConverter.convertListToJsonString(IProductsVendorsDao.getAllOffers());
+                        socketWriter.println(jsonString);
                         break;
                     case "8":
                         break;

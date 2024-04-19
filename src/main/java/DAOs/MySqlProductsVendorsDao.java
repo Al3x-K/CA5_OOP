@@ -65,6 +65,11 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         return productList;
     }
 
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+
     @Override
     public List<Vendor> getVendorsSellingProductId(int productId) throws DaoException
     {
@@ -117,6 +122,66 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         }
         return vendorList;
     }
+
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+    @Override
+    public List<Offer> getAllOffers() throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Offer> offerList = new ArrayList<>();
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "SELECT ProductID, VendorID, ProductName, Price, Quantity FROM PRODUCTS JOIN PRODUCTSVENDORS USING(ProductID)";
+            preparedStatement = connection.prepareStatement(query);
+
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+                int productId = resultSet.getInt("ProductID");
+                int vendorId = resultSet.getInt("VendorID");
+                String productName = resultSet.getString("ProductName");
+                double price = resultSet.getDouble("Price");
+                int quantity = resultSet.getInt("Quantity");
+                Offer o = new Offer(productId, vendorId, productName, price, quantity);
+                offerList.add(o);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getOffersByVendorId() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getProductsSoldByVendorId() " + e.getMessage());
+            }
+        }
+        return offerList;
+    }
+
     /**
      * Main author: Samuel Sukovský
      *
@@ -350,6 +415,10 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         return vendor;
     }
 
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
 
     @Override
     public void deleteByProductID(int productId) throws DaoException
@@ -390,29 +459,45 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         }
     }
 
+    /**
+     * Main author: Samuel Sukovský
+     *
+     */
+
     @Override
-    public void deleteByVendorID(int vendorId) throws DaoException {
+    public void deleteByVendorID(int vendorId) throws DaoException
+    {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        try {
+        try
+        {
             connection = this.getConnection();
             String query = "DELETE FROM PRODUCTSVENDORS WHERE VendorID = ?";
             preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setInt(1, vendorId);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             throw new DaoException("deleteByVendorID() " + e.getMessage());
-        } finally {
-            try {
-                if (preparedStatement != null) {
+        }
+        finally
+        {
+            try
+            {
+                if (preparedStatement != null)
+                {
                     preparedStatement.close();
                 }
-                if (connection != null) {
+                if (connection != null)
+                {
                     freeConnection(connection);
                 }
-            } catch (SQLException e) {
+            }
+            catch (SQLException e)
+            {
                 throw new DaoException("getVendorsSellingProductId() " + e.getMessage());
             }
         }
@@ -422,7 +507,9 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
      * Main author: Aleksandra Kail
      *
      */
-    public void updateProductsVendorsById(int pId, int vId, double price, int quantity) throws DaoException {
+    @Override
+    public void updateProductsVendorsById(int pId, int vId, double price, int quantity) throws DaoException
+    {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -467,6 +554,10 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         }
     }
 
+    /**
+     * Main author: Aleksandra Kail
+     *
+     */
     public void insertOffer(Product p, Vendor v, double price, int quantity) throws DaoException
     {
         Connection connection = null;
@@ -508,5 +599,4 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
             }
         }
     }
-
 }

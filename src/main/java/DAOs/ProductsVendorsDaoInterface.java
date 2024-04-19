@@ -15,6 +15,8 @@ public interface ProductsVendorsDaoInterface
 
     public List<Vendor> getVendorsSellingProductId(int productId) throws DaoException;
 
+    public List<Offer> getAllOffers() throws DaoException;
+
     public List<Offer> getOffersByVendorId(int vendorId) throws DaoException;
 
     public List<Offer> getOffersByProductId(int productId) throws DaoException;
