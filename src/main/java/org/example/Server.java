@@ -6,10 +6,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import DAOs.*;
+import DTOs.Offer;
+import DTOs.Order;
 import Exceptions.DaoException;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,19 +120,27 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
         ProductDaoInterface IProductDao = new MySqlProductDao();
         VendorDaoInterface IVendorDao = new MySqlVendorDao();
         ProductsVendorsDaoInterface IProductsVendorsDao = new MySqlProductsVendorsDao();
+        OrderDaoInterface IOrderDao = new MySqlOrderDao();
+        OrdersProductsVendorsDaoInterface IOrdersProductsVendorsDao = new MySqlOrdersProductsVendorsDao();
         JsonConverter jsonConverter = new JsonConverter();
-        try {
+        try
+        {
             dataOutputStream = new DataOutputStream( clientSocket.getOutputStream());
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             throw new RuntimeException(e);
         }
 
         int id;
-        String jsonString;
+        String jsonString = null;
         String request;
-        try {
-            while ((request = socketReader.readLine()) != null) {
-                switch (request) {
+        try
+        {
+            while ((request = socketReader.readLine()) != null)
+            {
+                switch (request)
+                {
                     case "1":
                         id = Integer.parseInt(socketReader.readLine());
                         System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request + ", " + id);
@@ -173,17 +181,74 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
                         socketWriter.println(jsonString);
                         break;
                     case "8":
+                        int pid = Integer.parseInt(socketReader.readLine());
+                        int vid = Integer.parseInt(socketReader.readLine());
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request + ", " + pid + ", " + vid);
+                        jsonString = jsonConverter.ConvertObjectToJsonString(IProductsVendorsDao.getOfferByProductVendorIds(pid, vid));
+                        socketWriter.println(jsonString);
                         break;
                     case "9":
                         break;
                     case "10":
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request);
+                        String input = socketReader.readLine();
+                        Order order = jsonConverter.ConvertJsonStringToObject(input, Order.class);
+                        if (order.getOrderId() == -1)
+                        {
+                            order.setOrderId(IOrderDao.getMaxOrderId() + 1);
+                        }
+                        try
+                        {
+                            IOrderDao.insertOrder(order.getOrderId());
+                            for (Offer item : order.getItems())
+                            {
+                                IOrdersProductsVendorsDao.insertOrderItem(order.getOrderId(), item);
+                                Offer stock = IProductsVendorsDao.getOfferByProductVendorIds(item.getProductId(), item.getVendorId());
+                                IProductsVendorsDao.updateProductsVendorsById(item.getProductId(), item.getVendorId(), stock.getPrice(), stock.getQuantity() - item.getQuantity());
+                            }
+                            jsonString = "Order placed successfully";
+                        }
+                        catch (Exception e)
+                        {
+                            jsonString = e.toString();
+                        }
+                        finally
+                        {
+                            socketWriter.println(jsonString);
+                        }
+                        break;
+                    case "11":
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request);
+                        id = Integer.parseInt(socketReader.readLine());
+                        try
+                        {
+                            List<Offer> itemList = IOrdersProductsVendorsDao.getItemsByOrderId(id);
+                            for (Offer item : itemList)
+                            {
+                                Offer stock = IProductsVendorsDao.getOfferByProductVendorIds(item.getProductId(), item.getVendorId());
+                                IProductsVendorsDao.updateProductsVendorsById(item.getProductId(), item.getVendorId(), stock.getPrice(), stock.getQuantity() + item.getQuantity());
+                            }
+                            IOrderDao.deleteOrder(id);
+                            jsonString = "Order cancelled successfully";
+                        }
+                        catch (Exception e)
+                        {
+                            jsonString = e.toString();
+                        }
+                        finally
+                        {
+                            socketWriter.println(jsonString);
+                        }
+                        break;
+                    case "12":
                         List<String> imageList = getImageList();
                         socketWriter.println(imageList.toString());
                         String name = socketReader.readLine();
                         String selectedImage = name.substring(name.indexOf(":") + 1);
                         sendFile(imgDirectory + "/" + selectedImage);
                         break;
-                    case "11":
+                    case "13":
+                        System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + request + "\nInput is client side only");
                         break;
                     default:
                         socketWriter.println("Invalid option");

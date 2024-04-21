@@ -301,6 +301,60 @@ public class MySqlProductsVendorsDao extends MySqlDao implements ProductsVendors
         return offerList;
     }
 
+    @Override
+    public Offer getOfferByProductVendorIds(int productId, int vendorId) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Offer offer = null;
+
+        try
+        {
+            connection = this.getConnection();
+            String query = "SELECT ProductID, VendorID, ProductName, Price, Quantity FROM PRODUCTS JOIN PRODUCTSVENDORS USING(ProductID) WHERE ProductID = ? AND VendorID = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, productId);
+            preparedStatement.setInt(2, vendorId);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+                String productName = resultSet.getString("ProductName");
+                double price = resultSet.getDouble("Price");
+                int quantity = resultSet.getInt("Quantity");
+                offer = new Offer(productId, vendorId, productName, price, quantity);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getOfferByProductVendorIds() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getOfferByProductVendorIds() " + e.getMessage());
+            }
+        }
+        return offer;
+    }
+
     /**
      * Main author: Samuel Sukovský
      *
